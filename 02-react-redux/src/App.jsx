@@ -1,27 +1,14 @@
 import React, { useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner, Button, Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import Account from "./components/Account";
 import Bonus from "./components/Bonus";
 
 function App() {
-  const [account, setAccount] = useState({ amount: 0 });
-  const [bonus, setBonus] = useState({ points: 0 });
+  const account = useSelector((state) => state.account);
+  const points = useSelector((state) => state.bonus.points);
 
-  const incrementBonus = () => {
-    setBonus({ points: bonus.points + 1 });
-  };
-
-  const increment = () => {
-    setAccount({ amount: account.amount + 1 });
-  };
-
-  const decrement = () => {
-    setAccount({ amount: account.amount - 1 });
-  };
-
-  const incrementByAmount = (value) => {
-    setAccount({ amount: account.amount + value });
-  };
+  const { pending, amount, error } = account;
 
   return (
     <div className="App">
@@ -31,23 +18,33 @@ function App() {
             <h3 className="display-2 text-uppercase fw-semibold text-danger">
               App
             </h3>
-            <h5>Current Amount in Account : Rs.{account.amount}</h5>
-            <h5>Total Bonus Received : Rs.{bonus.points}</h5>
+            {pending ? (
+              <Button variant="danger" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Loading...</span>
+              </Button>
+            ) : error ? (
+              <Badge bg="danger">{error}</Badge>
+            ) : (
+              <h5>Current Amount in Account : Rs.{amount}</h5>
+            )}
+            <h5>Total Bonus Received : Rs.{points}</h5>
           </Col>
         </Row>
         <Row>
           <Col className="bg-danger bg-opacity-50">
-            <Account
-              increment={increment}
-              decrement={decrement}
-              incrementByAmount={incrementByAmount}
-              account={account}
-            />
+            <Account />
           </Col>
         </Row>
         <Row>
           <Col className="bg-secondary bg-opacity-25">
-            <Bonus incrementBonus={incrementBonus} bonus={bonus} />
+            <Bonus />
           </Col>
         </Row>
       </Container>
