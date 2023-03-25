@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 
-function Bonus() {
-  const [bonus, setBonus] = useState({ points: 0 });
-
-  const increment = () => {
-    setBonus({ points: bonus.points + 1 });
-  };
-
+function Bonus({ incrementBonus, bonus }) {
   return (
     <>
       <Container fluid className="mb-3">
@@ -27,7 +21,7 @@ function Bonus() {
         </Row>
         <Row>
           <Col>
-            <Button onClick={increment}>Increment +</Button>
+            <Button onClick={incrementBonus}>Increment +</Button>
           </Col>
         </Row>
       </Container>
