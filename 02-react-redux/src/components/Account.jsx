@@ -1,21 +1,8 @@
 import React, { useState } from "react";
 import { Button, Col, Container, InputGroup, Row, Form } from "react-bootstrap";
 
-function Account() {
+function Account({ account, increment, decrement, incrementByAmount }) {
   const [value, setValue] = useState();
-  const [account, setAccount] = useState({ amount: 0 });
-
-  const increment = () => {
-    setAccount({ amount: account.amount + 1 });
-  };
-
-  const decrement = () => {
-    setAccount({ amount: account.amount - 1 });
-  };
-
-  const incrementByAmount = (value) => {
-    setAccount({ amount: account.amount + value });
-  };
 
   return (
     <>
