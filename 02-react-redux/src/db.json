@@ -6,6 +6,7 @@
   ],
   "bonus": [
     { "id": 1, "points": 40 },
-    { "id": 2, "points": 50 }
+    { "id": 2, "points": 50 },
+    { "id": 3, "points": 60 }
   ]
 }

@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
+import { bonusIncrementFn } from "../actions";
+import { useSelector, useDispatch } from "react-redux";
 
 function Bonus() {
-  const [bonus, setBonus] = useState({ points: 0 });
-
-  const increment = () => {
-    setBonus({ points: bonus.points + 1 });
-  };
-
+  const points = useSelector((state) => state.bonus.points);
+  const dispatch = useDispatch();
   return (
     <>
       <Container fluid className="mb-3">
@@ -21,13 +19,15 @@ function Bonus() {
         <Row>
           <Col>
             <h4 className="display-4 text-uppercase fw-light">
-              Total Points : Rs.{bonus.points}
+              Total Points : Rs.{points}
             </h4>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Button onClick={increment}>Increment +</Button>
+            <Button onClick={() => dispatch(bonusIncrementFn())}>
+              Increment
+            </Button>
           </Col>
         </Row>
       </Container>

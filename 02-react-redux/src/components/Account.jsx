@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { Button, Col, Container, InputGroup, Row, Form } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  incrementFn,
+  decrementFn,
+  incrementByAmountFn,
+  getUser,
+} from "../actions";
 
-function Account() {
-  const [value, setValue] = useState();
-  const [account, setAccount] = useState({ amount: 0 });
-
-  const increment = () => {
-    setAccount({ amount: account.amount + 1 });
-  };
-
-  const decrement = () => {
-    setAccount({ amount: account.amount - 1 });
-  };
-
-  const incrementByAmount = (value) => {
-    setAccount({ amount: account.amount + value });
-  };
+function Account({ increment, decrement, incrementByAmount }) {
+  const [value, setValue] = useState(0);
+  const amount = useSelector((state) => state.account.amount);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -30,16 +26,16 @@ function Account() {
         <Row>
           <Col>
             <h4 className="display-4 text-uppercase fw-light">
-              Amount : Rs.{account.amount}
+              Amount : Rs.{amount}
             </h4>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Button onClick={increment}>Increment +</Button>
+            <Button onClick={() => dispatch(incrementFn())}>Inc</Button>
           </Col>
           <Col>
-            <Button onClick={decrement}>Decrement -</Button>
+            <Button onClick={() => dispatch(decrementFn())}>Dec</Button>
           </Col>
           <Col>
             <InputGroup>
@@ -47,14 +43,17 @@ function Account() {
                 type="number"
                 name="value"
                 value={value}
-                onChange={(e) => setValue(+e.target.value)}
+                onChange={(e) => setValue(e.target.value)}
               />
             </InputGroup>
           </Col>
           <Col>
-            <Button onClick={() => incrementByAmount(value)}>
-              Increment By +
+            <Button onClick={() => dispatch(incrementByAmountFn(value))}>
+              Inc By
             </Button>
+          </Col>
+          <Col>
+            <Button onClick={() => dispatch(getUser(3))}>Init Amount</Button>
           </Col>
         </Row>
       </Container>
