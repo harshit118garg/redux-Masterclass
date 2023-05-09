@@ -13,6 +13,7 @@ import {
   increment,
   decrement,
   incrementByAmount,
+  decrementByAmount,
   fetchUserById,
 } from "../slices/accountSlice";
 
@@ -62,6 +63,11 @@ function Account() {
           <Col>
             <Button onClick={() => dispatch(incrementByAmount(value))}>
               Inc By
+            </Button>
+          </Col>
+          <Col>
+            <Button onClick={() => dispatch(decrementByAmount(value))}>
+              Dec By
             </Button>
           </Col>
           <Col>
