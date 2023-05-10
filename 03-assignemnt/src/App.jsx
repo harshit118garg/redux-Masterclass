@@ -4,18 +4,17 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import AddUserModal from "./components/AddUserModal";
 import axios from "axios";
 import UserListTable from "./components/UserListTable";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers } from "./api";
 
 function App() {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [usersList, setUsersList] = useState([]);
 
-  const fetchUsers = async () => {
-    const data = await axios.get(`http://localhost:3000/users`);
-    setUsersList(data.data);
-  };
+  const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsers());
   }, []);
 
   return (
@@ -33,9 +32,7 @@ function App() {
         <AddUserModal show={showModal} onHide={() => setShowModal(false)} />
         <hr />
         <Container className="mt-5">
-          {usersList && usersList.length > 0 && (
-            <UserListTable usersList={usersList} />
-          )}
+          {users && users.length > 0 && <UserListTable usersList={users} />}
         </Container>
       </Container>
     </div>

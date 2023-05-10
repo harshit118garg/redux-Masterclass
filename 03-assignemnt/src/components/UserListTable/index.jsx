@@ -3,13 +3,16 @@ import { Button, Table } from "react-bootstrap";
 import { MdEdit } from "react-icons/md";
 import { VscTrash } from "react-icons/vsc";
 import UpdateUserModal from "../UpdateUserModal";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteUser } from "../../api";
 
 const UserListTable = ({ usersList }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <>
-      <Table>
+      <Table hover responsive>
         <thead>
           <tr className="text-bg-danger">
             <th>Sno.</th>
@@ -26,10 +29,10 @@ const UserListTable = ({ usersList }) => {
             return (
               <tr key={index}>
                 <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.age}</td>
-                <td>{user.city}</td>
+                <td>{user.userName}</td>
+                <td>{user.userEmail}</td>
+                <td>{user.userAge}</td>
+                <td>{user.userCity}</td>
                 <td>
                   <Button
                     variant="warning"
@@ -39,7 +42,16 @@ const UserListTable = ({ usersList }) => {
                   </Button>
                 </td>
                 <td>
-                  <Button variant="danger">
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      if (
+                        confirm("are you sure, you want to delete this user..?")
+                      ) {
+                        dispatch(deleteUser(user.id));
+                      }
+                    }}
+                  >
                     <VscTrash />
                   </Button>
                 </td>
