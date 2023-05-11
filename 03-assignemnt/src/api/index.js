@@ -16,13 +16,13 @@ export const addUser = createAsyncThunk("users/addUser", async (user) => {
 });
 
 // Create an async thunk to update an existing user on the API and update the store
-export const updateUser = createAsyncThunk("users/updateUser", async (user) => {
-  const response = await axios.put(
-    `${API_URL}/${user.id}`,
-    user
-  );
-  return response.data;
-});
+export const updateUser = createAsyncThunk(
+  "users/updateUser",
+  async ({ id, updateUserData }) => {
+    const response = await axios.put(`${API_URL}/${id}`, updateUserData);
+    return response.data;
+  }
+);
 
 // Create an async thunk to delete an existing user from the API and update the store
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {

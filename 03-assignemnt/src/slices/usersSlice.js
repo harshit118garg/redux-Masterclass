@@ -14,7 +14,7 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
-        state.status = "loading";
+        state.status = "loading"; 
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -30,7 +30,7 @@ export const usersSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         const { id, ...updatedData } = action.payload;
         const index = state.users.findIndex((data) => data.id === id);
-        state.data[index] = { ...state.data[index], ...updatedData };
+        state.users[index] = { ...state.users[index], ...updatedData };
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.users = state.users.filter((data) => data.id !== action.payload);
